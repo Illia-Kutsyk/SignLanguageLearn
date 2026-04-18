@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="m_Home">Головна</sys:String>
+    <sys:String x:Key="m_Profile">Профіль</sys:String>
+    <sys:String x:Key="m_Options">Налаштування</sys:String>
+    <sys:String x:Key="m_Exit">Вихід</sys:String>
+
+    <sys:String x:Key="m_Panel">Панель керування</sys:String>
+    <sys:String x:Key="m_Lessons">Уроки</sys:String>
+    <sys:String x:Key="m_Dictionary">Словник</sys:String>
+    <sys:String x:Key="m_Achievements">Досягнення</sys:String>
+    <sys:String x:Key="m_Tests">Тести</sys:String>
+
+    <sys:String x:Key="m_Settings">Налаштування додатку</sys:String>
+    <sys:String x:Key="m_DarkTheme">Темна тема</sys:String>
+    <sys:String x:Key="m_Language">Мова додатку</sys:String>
+
+    <sys:String x:Key="m_Ach_Title">Ваші досягнення</sys:String>
+    <sys:String x:Key="m_Ach_Step1">Перші кроки: Вивчено 10 слів</sys:String>
+    <sys:String x:Key="m_Ach_Step2">Спринт: Пройдено тест без помилок</sys:String>
+    <sys:String x:Key="m_Ach_Step3">Майстер: Вивчено всю абетку</sys:String>
+    <sys:String x:Key="m_Ach_Progress">Загальний прогрес</sys:String>
+
+    <sys:String x:Key="m_Content">Контент уроків з'явиться тут...</sys:String>
+    <sys:String x:Key="m_Test">Почати тести</sys:String>
+</ResourceDictionary>

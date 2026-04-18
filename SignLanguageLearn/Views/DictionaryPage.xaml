@@ -1,0 +1,50 @@
+﻿<Page x:Class="SignLanguageLearn.Views.DictionaryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="Dictionary" Background="{DynamicResource PrimaryBackground}">
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ContentGrid" 
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.0" To="1.0" Duration="0:0:0.4"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <Grid x:Name="ContentGrid" Margin="40">
+        <StackPanel>
+            <TextBlock Text="{DynamicResource m_Dictionary}" 
+                       FontSize="32" FontWeight="Bold" 
+                       Foreground="{DynamicResource MainText}"/>
+
+            <TextBox Margin="0,20" Height="40" 
+                     VerticalContentAlignment="Center" Padding="10,0"/>
+
+            <ListBox x:Name="WordsListBox" 
+                     Background="Transparent" 
+                     Height="350" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{DynamicResource CardBackground}" 
+                                CornerRadius="12" Margin="0,5" Padding="15">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10" Opacity="0.1" ShadowDepth="2"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" FontSize="18" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding Description}" FontSize="14" Opacity="0.7"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Page>

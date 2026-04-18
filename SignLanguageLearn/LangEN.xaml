@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="m_Home">Home</sys:String>
+    <sys:String x:Key="m_Profile">Profile</sys:String>
+    <sys:String x:Key="m_Options">Settings</sys:String>
+    <sys:String x:Key="m_Exit">Exit</sys:String>
+
+    <sys:String x:Key="m_Panel">Control Panel</sys:String>
+    <sys:String x:Key="m_Lessons">Lessons</sys:String>
+    <sys:String x:Key="m_Dictionary">Dictionary</sys:String>
+    <sys:String x:Key="m_Achievements">Achievements</sys:String>
+    <sys:String x:Key="m_Tests">Tests</sys:String>
+
+    <sys:String x:Key="m_Settings">App Settings</sys:String>
+    <sys:String x:Key="m_DarkTheme">Dark Mode</sys:String>
+    <sys:String x:Key="m_Language">App Language</sys:String>
+
+    <sys:String x:Key="m_Ach_Title">Your Achievements</sys:String>
+    <sys:String x:Key="m_Ach_Step1">First steps: Learned 10 words</sys:String>
+    <sys:String x:Key="m_Ach_Step2">Sprint: Test passed without errors</sys:String>
+    <sys:String x:Key="m_Ach_Step3">Master: Learned the whole alphabet</sys:String>
+    <sys:String x:Key="m_Ach_Progress">Total progress</sys:String>
+
+    <sys:String x:Key="m_Content">Lesson content will appear here...</sys:String>
+    <sys:String x:Key="m_Test">Start tests</sys:String>
+</ResourceDictionary>
