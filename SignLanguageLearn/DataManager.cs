@@ -18,6 +18,7 @@ namespace SignLanguageLearn.Services
         public string UserName { get; set; }
         public string Level { get; set; }
         public int TotalPoints { get; set; }
+        public bool IsLoggedIn { get; set; }
     }
 
     public class Section
@@ -39,13 +40,15 @@ namespace SignLanguageLearn.Services
         private static readonly string FolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GestoPlatform");
         private static readonly string FilePath = Path.Combine(FolderPath, "appdata.json");
 
+        public static RootData SharedData { get; set; }
+
         public static void SaveData(RootData data)
         {
             try
             {
                 if (!Directory.Exists(FolderPath)) Directory.CreateDirectory(FolderPath);
-                // Явно вказуємо Newtonsoft.Json.Formatting, щоб не було конфлікту з XML
-                string jsonString = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+                SharedData = data;
+                string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(FilePath, jsonString);
             }
             catch { }
@@ -53,13 +56,16 @@ namespace SignLanguageLearn.Services
 
         public static RootData LoadData()
         {
-            if (!File.Exists(FilePath)) return CreateDefaultData();
+            if (SharedData != null) return SharedData;
+
+            if (!File.Exists(FilePath)) return SharedData = CreateDefaultData();
+
             try
             {
                 string jsonString = File.ReadAllText(FilePath);
-                return JsonConvert.DeserializeObject<RootData>(jsonString);
+                return SharedData = JsonConvert.DeserializeObject<RootData>(jsonString);
             }
-            catch { return CreateDefaultData(); }
+            catch { return SharedData = CreateDefaultData(); }
         }
 
         private static RootData CreateDefaultData()
@@ -67,7 +73,7 @@ namespace SignLanguageLearn.Services
             return new RootData
             {
                 AppSettings = new AppSettings { AppName = "Gesto", Version = "1.0.0", CurrentLanguage = "UA", CurrentTheme = "Light" },
-                UserData = new UserData { UserName = "Студент", Level = "Початківець", TotalPoints = 0 },
+                UserData = new UserData { UserName = "Студент", Level = "Початківець", TotalPoints = 0, IsLoggedIn = false },
                 Sections = new List<Section>
                 {
                     new Section { Id = "Lessons", Title = "Уроки", ProgressPercentage = 0 },

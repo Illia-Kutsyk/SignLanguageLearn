@@ -12,11 +12,8 @@ namespace SignLanguageLearn.Views
 
         private void LoadUserStats()
         {
-            // Беремо дані з MainWindow
             var user = MainWindow.AppData.UserData;
 
-            // Наприклад, якщо у тебе є TextBlock з ім'ям txtPoints
-            // txtPoints.Text = $"Ваші бали: {user.TotalPoints}";
         }
     }
 }

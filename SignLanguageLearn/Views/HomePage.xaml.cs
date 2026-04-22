@@ -11,9 +11,17 @@ namespace SignLanguageLearn.Views
             InitializeComponent();
         }
 
-        private void BtnLessons_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new LessonsPage());
-        private void BtnDictionary_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new DictionaryPage());
-        private void BtnAchievements_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new AchievementsPage());
-        private void BtnTests_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new TestsPage());
+        private void BtnLessons_Click(object sender, RoutedEventArgs e) =>
+            NavigationService.Navigate(new LessonsPage());
+
+        private void BtnDictionary_Click(object sender, RoutedEventArgs e) =>
+            NavigationService.Navigate(new DictionaryPage());
+
+        private void BtnAchievements_Click(object sender, RoutedEventArgs e) =>
+            NavigationService.Navigate(new AchievementsPage());
+
+        // ВИПРАВЛЕНО: Прибрали 's', тепер назва збігається з класом у TestPage.xaml.cs
+        private void BtnTests_Click(object sender, RoutedEventArgs e) =>
+            NavigationService.Navigate(new TestPage());
     }
 }

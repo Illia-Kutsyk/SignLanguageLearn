@@ -1,40 +1,18 @@
 ﻿<Page x:Class="SignLanguageLearn.Views.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Settings" Background="{DynamicResource PrimaryBackground}">
-
-    <Page.Resources>
-        <Style x:Key="LangToggle" TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
-            <Setter Property="Width" Value="55"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Background" Value="#33FFFFFF"/>
-            <Setter Property="Foreground" Value="{DynamicResource MainText}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#4CAF50"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Page.Resources>
+      Title="Settings" Background="{DynamicResource BackgroundBrush}">
 
     <Grid Margin="40">
         <StackPanel MaxWidth="650" HorizontalAlignment="Left">
-            <TextBlock Text="{DynamicResource m_Settings}" FontSize="32" FontWeight="Bold" 
-                       Foreground="{DynamicResource MainText}" Margin="0,0,0,30"/>
+            <TextBlock Text="Налаштування" FontSize="32" FontWeight="Bold" 
+                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,30"/>
 
-            <Border Background="{DynamicResource CardBackground}" CornerRadius="20" Padding="30">
+            <Border Background="{DynamicResource CardBrush}" CornerRadius="20" Padding="30">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" Direction="270" Opacity="0.05" ShadowDepth="2"/>
+                </Border.Effect>
+
                 <StackPanel>
                     <Grid Margin="0,0,0,25">
                         <Grid.ColumnDefinitions>
@@ -43,21 +21,21 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource m_Language}" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource MainText}"/>
-                            <TextBlock Text="Виберіть мову інтерфейсу" FontSize="12" Opacity="0.5" Foreground="{DynamicResource MainText}"/>
+                            <TextBlock Text="Вибір мови жестів" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                            <TextBlock Text="Виберіть мову для навчання" FontSize="12" Opacity="0.6" Foreground="{DynamicResource TextBrush}"/>
                         </StackPanel>
 
                         <Border Grid.Column="1" Background="#15000000" CornerRadius="10" Padding="3">
                             <StackPanel Orientation="Horizontal">
-                                <RadioButton x:Name="RbUa" Content="UA" Style="{StaticResource LangToggle}" 
-                                             GroupName="Langs" Checked="RbUa_Checked" Margin="0,0,3,0"/>
-                                <RadioButton x:Name="RbEn" Content="EN" Style="{StaticResource LangToggle}" 
+                                <RadioButton x:Name="RbUa" Content="UA" Style="{StaticResource LanguageToggleStyle}" 
+                                             GroupName="Langs" Checked="RbUa_Checked"/>
+                                <RadioButton x:Name="RbEn" Content="EN" Style="{StaticResource LanguageToggleStyle}" 
                                              GroupName="Langs" Checked="RbEn_Checked"/>
                             </StackPanel>
                         </Border>
                     </Grid>
 
-                    <Separator Opacity="0.1" Margin="0,0,0,25"/>
+                    <Separator Opacity="0.1" Margin="0,20,0,25" Background="{DynamicResource TextBrush}"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -66,13 +44,18 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel>
-                            <TextBlock Text="{DynamicResource m_DarkTheme}" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource MainText}"/>
-                            <TextBlock Text="Використовувати темні кольори" FontSize="12" Opacity="0.5" Foreground="{DynamicResource MainText}"/>
+                            <TextBlock Text="Візуальна тема" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                            <TextBlock Text="Виберіть колірну схему інтерфейсу" FontSize="12" Opacity="0.6" Foreground="{DynamicResource TextBrush}"/>
                         </StackPanel>
 
-                        <CheckBox x:Name="ThemeCheckBox" Grid.Column="1" 
-                                  Style="{StaticResource ModernToggleStyle}" 
-                                  Checked="DarkTheme_Checked" Unchecked="DarkTheme_Unchecked"/>
+                        <Border Grid.Column="1" Background="#15000000" CornerRadius="10" Padding="3">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="RbLight" Content="Light" Style="{StaticResource LanguageToggleStyle}" 
+                                             GroupName="Theme" Checked="RbLight_Checked"/>
+                                <RadioButton x:Name="RbDark" Content="Dark" Style="{StaticResource LanguageToggleStyle}" 
+                                             GroupName="Theme" Checked="RbDark_Checked"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
                 </StackPanel>
             </Border>

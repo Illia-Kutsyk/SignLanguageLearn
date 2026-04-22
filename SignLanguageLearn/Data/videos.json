@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Title": "А",
+    "FileName": "a",
+    "Category": "Alphabet",
+    "Language": "UA"
+  },
+  {
+    "Title": "Б",
+    "FileName": "b",
+    "Category": "Alphabet",
+    "Language": "UA"
+  },
+  {
+    "Title": "В",
+    "FileName": "v",
+    "Category": "Alphabet",
+    "Language": "UA"
+  },
+  {
+    "Title": "Привіт",
+    "FileName": "hello",
+    "Category": "Phrases",
+    "Language": "UA"
+  },
+  {
+    "Title": "Дякую",
+    "FileName": "thanks",
+    "Category": "Phrases",
+    "Language": "UA"
+  },
+  {
+    "Title": "Hello",
+    "FileName": "hello",
+    "Category": "Phrases",
+    "Language": "EN"
+  }
+]

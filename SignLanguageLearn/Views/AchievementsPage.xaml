@@ -5,15 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-      Title="AchievementsPage" Background="{DynamicResource PrimaryBackground}">
-
+      Title="AchievementsPage" 
+      Background="{DynamicResource BackgroundBrush}">
     <Page.Triggers>
         <EventTrigger RoutedEvent="Page.Loaded">
             <BeginStoryboard>
                 <Storyboard>
                     <DoubleAnimation Storyboard.TargetName="ContentGrid" 
                                      Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.4"/>
+                                     From="0.0" To="1.0" Duration="0:0:0.6"/>
+                    <ThicknessAnimation Storyboard.TargetName="ContentGrid"
+                                        Storyboard.TargetProperty="Margin"
+                                        From="40,100,40,0" To="40,40,40,40" Duration="0:0:0.4"/>
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
@@ -22,26 +25,40 @@
     <Grid x:Name="ContentGrid" Margin="40">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="🏆" FontSize="80" HorizontalAlignment="Center"/>
-            <TextBlock Text="{DynamicResource m_Ach_Title}" FontSize="32" FontWeight="Bold" 
-                       Foreground="{DynamicResource MainText}" Margin="0,20"/>
 
-            <Border Background="{DynamicResource CardBackground}" CornerRadius="15" Padding="25" Width="500">
+            <TextBlock Text="Досягнення" FontSize="32" FontWeight="Bold" 
+                       Foreground="{DynamicResource TextBrush}" 
+                       HorizontalAlignment="Center" Margin="0,20"/>
+
+            <Border Background="{DynamicResource CardBrush}" CornerRadius="15" Padding="25" Width="500">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.1"/>
                 </Border.Effect>
+
                 <StackPanel>
-                    <CheckBox Content="{DynamicResource m_Ach_Step1}" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource MainText}" Margin="0,10"/>
-                    <CheckBox Content="{DynamicResource m_Ach_Step2}" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource MainText}" Margin="0,10"/>
-                    <CheckBox Content="{DynamicResource m_Ach_Step3}" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource MainText}" Margin="0,10"/>
+                    <CheckBox Content="Перші кроки: Вивчити 5 жестів" IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
 
-                    <Separator Margin="0,20" Background="{DynamicResource MainText}" Opacity="0.2"/>
+                    <CheckBox Content="Словниковий запас: Вивчити 20 жестів" IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
 
-                    <TextBlock Text="{DynamicResource m_Ach_Progress}" FontSize="16" FontWeight="SemiBold" 
-                               Foreground="{DynamicResource MainText}" Margin="0,0,0,10"/>
-                    <ProgressBar x:Name="OverallProgress" Value="0" Height="12" Foreground="#00B894" Background="#F0F0F0" Margin="0,0,0,5"/>
+                    <CheckBox Content="Експерт: Пройти всі тести на 100%" IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
+
+                    <Separator Margin="0,20" Background="{DynamicResource TextBrush}" Opacity="0.2"/>
+
+                    <TextBlock Text="Загальний прогрес" FontSize="16" FontWeight="SemiBold" 
+                               Foreground="{DynamicResource TextBrush}" Margin="0,0,0,10"/>
+
+                    <ProgressBar x:Name="OverallProgress" Value="0" Height="15" 
+                                 Foreground="#00B894" Background="#E0E0E0" Margin="0,0,0,5">
+                        <ProgressBar.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="7"/>
+                            </Style>
+                        </ProgressBar.Resources>
+                    </ProgressBar>
+
                     <TextBlock Text="0%" FontSize="12" Foreground="Gray" HorizontalAlignment="Right"/>
                 </StackPanel>
             </Border>

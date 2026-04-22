@@ -21,12 +21,18 @@ namespace SignLanguageLearn.Views
             if (MainWindow.AppData == null) return;
             _isReady = false;
 
+            // 1. Встановлюємо перемикачі мови жестів
             if (MainWindow.AppData.AppSettings.CurrentLanguage == "UA")
                 RbUa.IsChecked = true;
             else
                 RbEn.IsChecked = true;
 
-            ThemeCheckBox.IsChecked = (MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
+            // 2. Встановлюємо перемикачі теми (замість ThemeCheckBox)
+            if (MainWindow.AppData.AppSettings.CurrentTheme == "Dark")
+                RbDark.IsChecked = true;
+            else
+                RbLight.IsChecked = true;
+
             _isReady = true;
         }
 
@@ -34,25 +40,59 @@ namespace SignLanguageLearn.Views
         {
             if (!_isReady || MainWindow.AppData == null) return;
 
-            // 1. Зберігаємо дані
+            // Зберігаємо зміни в наш data.json
             DataManager.SaveData(MainWindow.AppData);
 
-            // 2. Оновлюємо глобальні ресурси (мову та кольори)
-            string langFile = MainWindow.AppData.AppSettings.CurrentLanguage == "UA" ? "LangUA.xaml" : "LangEN.xaml";
-            App.StringUpdate(langFile);
-            App.ColorUpdate(MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
+            // Оновлюємо кольори теми
+            try
+            {
+                App.ColorUpdate(MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
+            }
+            catch { /* Обробка, якщо метод ще не реалізований */ }
 
-            // 3. ФІКС: Оновлюємо саме вікно та перенаправляємо фрейм назад на налаштування
+            // Перезавантажуємо сторінку
             if (Application.Current.MainWindow is MainWindow mainWin)
             {
-                // Перевантажуємо сторінку налаштувань, щоб вона не ставала порожньою
                 mainWin.MainFrame.Navigate(new SettingsPage());
             }
         }
 
-        private void DarkTheme_Checked(object sender, RoutedEventArgs e) { if (MainWindow.AppData != null) MainWindow.AppData.AppSettings.CurrentTheme = "Dark"; TriggerUpdate(); }
-        private void DarkTheme_Unchecked(object sender, RoutedEventArgs e) { if (MainWindow.AppData != null) MainWindow.AppData.AppSettings.CurrentTheme = "Light"; TriggerUpdate(); }
-        private void RbUa_Checked(object sender, RoutedEventArgs e) { if (MainWindow.AppData != null) MainWindow.AppData.AppSettings.CurrentLanguage = "UA"; TriggerUpdate(); }
-        private void RbEn_Checked(object sender, RoutedEventArgs e) { if (MainWindow.AppData != null) MainWindow.AppData.AppSettings.CurrentLanguage = "EN"; TriggerUpdate(); }
+        // --- ОБРОБНИКИ МОВИ ---
+        private void RbUa_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.AppData != null)
+            {
+                MainWindow.AppData.AppSettings.CurrentLanguage = "UA";
+                TriggerUpdate();
+            }
+        }
+
+        private void RbEn_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.AppData != null)
+            {
+                MainWindow.AppData.AppSettings.CurrentLanguage = "EN";
+                TriggerUpdate();
+            }
+        }
+
+        // --- ОБРОБНИКИ ТЕМИ (Додано замість старих DarkTheme_Checked) ---
+        private void RbLight_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.AppData != null)
+            {
+                MainWindow.AppData.AppSettings.CurrentTheme = "Light";
+                TriggerUpdate();
+            }
+        }
+
+        private void RbDark_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.AppData != null)
+            {
+                MainWindow.AppData.AppSettings.CurrentTheme = "Dark";
+                TriggerUpdate();
+            }
+        }
     }
 }

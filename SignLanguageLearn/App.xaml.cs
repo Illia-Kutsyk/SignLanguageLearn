@@ -2,44 +2,48 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using SignLanguageLearn.Services;
 
 namespace SignLanguageLearn
 {
     public partial class App : Application
     {
-        public static void StringUpdate(string langFileName)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            try
+            base.OnStartup(e);
+
+            // 1. Читаємо JSON при старті
+            var data = DataManager.LoadData();
+
+            if (data != null)
             {
-                var oldLang = Current.Resources.MergedDictionaries
-                    .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Lang"));
+                // 2. Записуємо в MainWindow (тепер воно знайде AppData через повне ім'я)
+                SignLanguageLearn.MainWindow.AppData = data;
 
-                if (oldLang != null)
-                    Current.Resources.MergedDictionaries.Remove(oldLang);
-
-                ResourceDictionary dict = new ResourceDictionary
-                {
-                    Source = new Uri($"/{langFileName}", UriKind.Relative)
-                };
-                Current.Resources.MergedDictionaries.Add(dict);
+                // 3. Фарбуємо додаток
+                ColorUpdate(data.AppSettings.CurrentTheme == "Dark");
             }
-            catch (Exception ex) { MessageBox.Show("Помилка словника: " + ex.Message); }
+        }
+
+        public static void StringUpdate(string langFile)
+        {
+            // Порожній метод для сумісності
         }
 
         public static void ColorUpdate(bool isDark)
         {
-            if (isDark)
-            {
-                Current.Resources["PrimaryBackground"] = new SolidColorBrush(Color.FromRgb(30, 27, 41));
-                Current.Resources["CardBackground"] = new SolidColorBrush(Color.FromRgb(45, 41, 59));
-                Current.Resources["MainText"] = new SolidColorBrush(Colors.White);
-            }
-            else
-            {
-                Current.Resources["PrimaryBackground"] = new SolidColorBrush(Color.FromRgb(205, 233, 254));
-                Current.Resources["CardBackground"] = new SolidColorBrush(Colors.White);
-                Current.Resources["MainText"] = new SolidColorBrush(Color.FromRgb(45, 52, 54));
-            }
+            // Визначаємо кольори
+            Color bgColor = isDark ? Color.FromRgb(30, 27, 41) : Color.FromRgb(205, 233, 254);
+            Color cardColor = isDark ? Color.FromRgb(45, 41, 59) : Colors.White;
+            Color textColor = isDark ? Colors.White : Color.FromRgb(45, 52, 54);
+
+            // Оновлюємо ресурси через Current.Resources
+            var res = Application.Current.Resources;
+
+            // Оновлюємо ВСІ можливі ключі одночасно
+            res["BackgroundBrush"] = res["PrimaryBackground"] = new SolidColorBrush(bgColor);
+            res["CardBrush"] = res["CardBackground"] = new SolidColorBrush(cardColor);
+            res["TextBrush"] = res["MainText"] = new SolidColorBrush(textColor);
         }
     }
 }

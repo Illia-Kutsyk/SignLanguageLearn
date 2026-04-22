@@ -1,82 +1,56 @@
 ﻿using System;
 using System.Windows;
-using System.Linq;
 using System.Windows.Media;
 using SignLanguageLearn.Services;
+using SignLanguageLearn.Views; // Додано для прямого доступу до класів сторінок
 
 namespace SignLanguageLearn
 {
     public partial class MainWindow : Window
     {
+        // Дані застосунку
         public static RootData AppData { get; set; }
 
         public MainWindow()
         {
+            // Завантаження даних, якщо вони ще не ініціалізовані
+            if (AppData == null) AppData = DataManager.LoadData();
+
+            // Встановлення теми перед ініціалізацією компонентів
+            if (AppData != null && AppData.AppSettings != null)
+            {
+                App.ColorUpdate(AppData.AppSettings.CurrentTheme == "Dark");
+            }
+
             InitializeComponent();
 
-            // 1. Завантажуємо дані з JSON
-            AppData = DataManager.LoadData();
-
-            // 2. Застосовуємо тему та мову при старті
-            UpdateVisuals();
+            // Завантажуємо головну сторінку за замовчуванням при старті
+            MainFrame.Navigate(new HomePage());
         }
 
-        // ЦЕЙ МЕТОД ТЕПЕР ПУБЛІЧНИЙ І МІСТИТЬ ВСЕ: І МОВУ, І ТЕМУ
         public void UpdateVisuals()
         {
-            if (AppData == null) return;
-
-            try
-            {
-                // --- 1. ОНОВЛЕННЯ МОВИ ---
-                // Використовуємо твій LanguageManager або пряму заміну файлів
-                string langFile = AppData.AppSettings.CurrentLanguage == "UA" ? "LangUA.xaml" : "LangEN.xaml";
-
-                // Оскільки файли в корені (як на твоїх скрінах), шлях просто "/файл"
-                var langUri = new Uri($"/{langFile}", UriKind.Relative);
-                var newLangDict = new ResourceDictionary { Source = langUri };
-
-                // Видаляємо стару мову і додаємо нову
-                var oldLang = Application.Current.Resources.MergedDictionaries
-                    .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Lang"));
-
-                if (oldLang != null) Application.Current.Resources.MergedDictionaries.Remove(oldLang);
-                Application.Current.Resources.MergedDictionaries.Add(newLangDict);
-
-                // --- 2. ОНОВЛЕННЯ ТЕМИ (Твій робочий метод кольорів) ---
-                SetTheme(AppData.AppSettings.CurrentTheme == "Dark");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка оновлення візуалу: " + ex.Message);
-            }
+            if (AppData == null || AppData.AppSettings == null) return;
+            App.ColorUpdate(AppData.AppSettings.CurrentTheme == "Dark");
         }
 
-        // ТОЙ САМИЙ МЕТОД, ЯКИЙ ШУКАВ SETTINGSPAGE
-        public void SetTheme(bool isDark)
-        {
-            if (isDark)
-            {
-                Application.Current.Resources["PrimaryBackground"] = new SolidColorBrush(Color.FromRgb(30, 27, 41));
-                Application.Current.Resources["CardBackground"] = new SolidColorBrush(Color.FromRgb(45, 41, 59));
-                Application.Current.Resources["MainText"] = new SolidColorBrush(Colors.White);
-            }
-            else
-            {
-                Application.Current.Resources["PrimaryBackground"] = new SolidColorBrush(Color.FromRgb(205, 233, 254));
-                Application.Current.Resources["CardBackground"] = new SolidColorBrush(Colors.White);
-                Application.Current.Resources["MainText"] = new SolidColorBrush(Color.FromRgb(45, 52, 54));
-            }
-        }
+        // Навігація
+        private void BtnHome_Click(object sender, RoutedEventArgs e) =>
+            MainFrame.Navigate(new HomePage());
 
-        // --- НАВІГАЦІЯ ---
-        private void BtnHome_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new Uri("Views/HomePage.xaml", UriKind.Relative));
-        private void BtnProfile_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new Uri("Views/ProfilePage.xaml", UriKind.Relative));
-        private void BtnSettings_Click(object sender, RoutedEventArgs e) => MainFrame.Navigate(new Uri("Views/SettingsPage.xaml", UriKind.Relative));
+        private void BtnProfile_Click(object sender, RoutedEventArgs e) =>
+            MainFrame.Navigate(new ProfilePage());
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e) =>
+            MainFrame.Navigate(new SettingsPage());
+
+        // Метод для відкриття інструкції
+        private void BtnInstruction_Click(object sender, RoutedEventArgs e) =>
+            MainFrame.Navigate(new InstructionPage());
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
-            DataManager.SaveData(AppData);
+            if (AppData != null) DataManager.SaveData(AppData);
             Application.Current.Shutdown();
         }
     }

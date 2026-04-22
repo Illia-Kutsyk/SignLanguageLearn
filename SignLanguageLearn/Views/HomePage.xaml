@@ -25,35 +25,35 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{DynamicResource m_Panel}" FontSize="36" FontWeight="Bold" 
+        <TextBlock Text="Вивчення Мови Жестів" FontSize="36" FontWeight="Bold" 
                    Foreground="{DynamicResource MainText}" Margin="15,0,0,20"/>
 
         <UniformGrid Grid.Row="1" Columns="2">
             <Button Style="{StaticResource CardButtonStyle}" Click="BtnLessons_Click">
                 <StackPanel>
                     <TextBlock Text="🎓" FontSize="60" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{DynamicResource m_Lessons}" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Уроки" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource CardButtonStyle}" Click="BtnDictionary_Click">
                 <StackPanel>
                     <TextBlock Text="📖" FontSize="60" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{DynamicResource m_Dictionary}" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Словник" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource CardButtonStyle}" Click="BtnAchievements_Click">
                 <StackPanel>
                     <TextBlock Text="🏆" FontSize="60" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{DynamicResource m_Achievements}" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Досягнення" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource CardButtonStyle}" Click="BtnTests_Click">
                 <StackPanel>
                     <TextBlock Text="📝" FontSize="60" HorizontalAlignment="Center"/>
-                    <TextBlock Text="{DynamicResource m_Tests}" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Тести" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Button>
         </UniformGrid>

@@ -1,3 +1,9 @@
 <Solution>
-  <Project Path="SignLanguageLearn/SignLanguageLearn.csproj" Id="a9172479-3bd1-4d20-b088-73b8ea2ba8ac" />
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="SignLanguageLearn/SignLanguageLearn.csproj" Id="a9172479-3bd1-4d20-b088-73b8ea2ba8ac">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

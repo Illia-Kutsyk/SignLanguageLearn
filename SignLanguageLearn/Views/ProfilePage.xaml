@@ -1,25 +1,104 @@
 ﻿<Page x:Class="SignLanguageLearn.Views.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Profile" Background="{DynamicResource PrimaryBackground}">
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProfilePage">
 
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Page.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="ContentGrid" 
-                                     Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.4"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Page.Triggers>
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
 
-    <Grid x:Name="ContentGrid" Margin="40">
-        <StackPanel HorizontalAlignment="Center">
-            <Ellipse Width="100" Height="100" Fill="#34495E" Margin="0,0,0,20"/>
-            <TextBlock Text="{DynamicResource m_Profile}" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Foreground="{DynamicResource MainText}"/>
-            <TextBlock Text="Користувач: Студент" FontSize="16" Foreground="{DynamicResource MainText}" HorizontalAlignment="Center" Margin="0,10"/>
+            <StackPanel x:Name="AuthBlock" Visibility="Visible">
+                <TextBlock Text="Авторизація" 
+                           FontSize="28" 
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource TextBrush}" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,25"/>
+
+                <TextBlock Text="Логін" Foreground="{DynamicResource TextBrush}" Margin="0,5" FontSize="14"/>
+                <TextBox x:Name="LoginTxt" 
+                         Height="40" 
+                         VerticalContentAlignment="Center" 
+                         Padding="10,0"
+                         Background="{DynamicResource FieldBackBrush}" 
+                         Foreground="{DynamicResource TextBrush}"
+                         BorderBrush="{DynamicResource AccentBrush}"/>
+
+                <TextBlock Text="Пароль" Foreground="{DynamicResource TextBrush}" Margin="0,15,0,5" FontSize="14"/>
+                <PasswordBox x:Name="PassBox" 
+                             Height="40" 
+                             VerticalContentAlignment="Center" 
+                             Padding="10,0"
+                             Background="{DynamicResource FieldBackBrush}" 
+                             Foreground="{DynamicResource TextBrush}"
+                             BorderBrush="{DynamicResource AccentBrush}"/>
+
+                <Button Content="Увійти" 
+                        Height="45" 
+                        Margin="0,30,0,10" 
+                        Click="LoginClick" 
+                        Cursor="Hand"
+                        Background="{DynamicResource AccentBrush}" 
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="SemiBold">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="Створити новий акаунт" 
+                        Click="RegisterClick" 
+                        Background="Transparent" 
+                        Foreground="Gray" 
+                        BorderThickness="0" 
+                        Cursor="Hand"
+                        FontSize="13"/>
+            </StackPanel>
+
+            <StackPanel x:Name="ProfileBlock" Visibility="Collapsed">
+                <Grid HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <Ellipse Width="100" Height="100" Fill="{DynamicResource AccentBrush}"/>
+                    <TextBlock Text="👤" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                </Grid>
+
+                <TextBlock Text="Вітаємо," 
+                           FontSize="16" 
+                           Foreground="Gray" 
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="UserNameLbl" 
+                           Text="Користувач" 
+                           FontSize="32" 
+                           FontWeight="ExtraBold" 
+                           Foreground="{DynamicResource TextBrush}" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,5,0,30"/>
+
+                <Border BorderThickness="0,1,0,0" BorderBrush="#20000000" Margin="0,10"/>
+
+                <Button Content="Вийти з профілю" 
+                        Height="40" 
+                        Width="200" 
+                        Margin="0,20" 
+                        Click="LogoutClick" 
+                        Background="#E74C3C" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+
         </StackPanel>
     </Grid>
 </Page>

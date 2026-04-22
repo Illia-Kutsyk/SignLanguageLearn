@@ -12,21 +12,30 @@
             <Grid>
                 <StackPanel Margin="10,20">
                     <TextBlock Text="Gesto." Foreground="White" FontSize="28" FontWeight="Bold" Margin="20,0,0,30"/>
+
                     <Button Style="{StaticResource MenuButtonStyle}" Click="BtnHome_Click">
-                        <TextBlock Text="{DynamicResource m_Home}"/>
+                        <TextBlock Text="Головна"/>
                     </Button>
+
                     <Button Style="{StaticResource MenuButtonStyle}" Click="BtnProfile_Click">
-                        <TextBlock Text="{DynamicResource m_Profile}"/>
+                        <TextBlock Text="Профіль"/>
                     </Button>
+
                     <Button Style="{StaticResource MenuButtonStyle}" Click="BtnSettings_Click">
-                        <TextBlock Text="{DynamicResource m_Options}"/>
+                        <TextBlock Text="Налаштування"/>
+                    </Button>
+
+                    <Button Style="{StaticResource MenuButtonStyle}" Click="BtnInstruction_Click">
+                        <TextBlock Text="Інструкція"/>
                     </Button>
                 </StackPanel>
+
                 <Button Style="{StaticResource MenuButtonStyle}" VerticalAlignment="Bottom" Margin="10,0,10,20" Click="BtnExit_Click">
-                    <TextBlock Text="{DynamicResource m_Exit}" Foreground="#FF7675" FontWeight="Bold"/>
+                    <TextBlock Text="Вихід" Foreground="#FF7675" FontWeight="Bold"/>
                 </Button>
             </Grid>
         </Border>
+
         <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" x:FieldModifier="public" />
     </Grid>
 </Window>

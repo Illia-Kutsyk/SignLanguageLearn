@@ -4,13 +4,17 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="LangUA.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
 
-            <SolidColorBrush x:Key="PrimaryBackground" Color="#CDE9FE"/>
-            <SolidColorBrush x:Key="CardBackground" Color="White"/>
-            <SolidColorBrush x:Key="MainText" Color="#2D3436"/>
+            <SolidColorBrush x:Key="BackgroundBrush" Color="#CDE9FE"/>
+            <SolidColorBrush x:Key="TextBrush" Color="#2D3436"/>
+            <SolidColorBrush x:Key="FieldBackBrush" Color="White"/>
+            <SolidColorBrush x:Key="AccentBrush" Color="#455A64"/>
+
+            <SolidColorBrush x:Key="CardBrush" Color="White"/>
+
+            <SolidColorBrush x:Key="PrimaryBackground" Color="{Binding Source={StaticResource BackgroundBrush}, Path=Color}"/>
+            <SolidColorBrush x:Key="CardBackground" Color="{Binding Source={StaticResource FieldBackBrush}, Path=Color}"/>
+            <SolidColorBrush x:Key="MainText" Color="{Binding Source={StaticResource TextBrush}, Path=Color}"/>
 
             <Style x:Key="MenuButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
@@ -45,15 +49,15 @@
                                 </Border.Effect>
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="BtnBorder" Property="Background" Value="#455A64"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="#455A64"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style x:Key="ModernToggleStyle" TargetType="CheckBox">
@@ -68,7 +72,7 @@
                                         </Ellipse.RenderTransform>
                                     </Ellipse>
                                 </Border>
-                                <ContentPresenter Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                <ContentPresenter Margin="10,0,0,0" VerticalAlignment="Center" TextElement.Foreground="{DynamicResource TextBrush}"/>
                             </StackPanel>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True">

@@ -1,0 +1,18 @@
+﻿{
+  "Users": [
+    {
+      "Id": 1,
+      "Login": "admin",
+      "Password": "adminpassword"
+    }
+  ],
+  "Lessons": [
+    {
+      "Id": 1,
+      "Title": "Привіт",
+      "VideoPath": "Resources/Videos/hello.mp4",
+      "Category": "Базові"
+    }
+  ],
+  "Achievements": []
+}
