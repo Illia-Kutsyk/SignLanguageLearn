@@ -27,6 +27,9 @@
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#37474F"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -64,7 +67,7 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,20">
-                <Button Content="← До тем" Click="BackToMenu_Click" Width="100" Height="40" Style="{StaticResource ModernButtonStyle}"/>
+                <Button Content="← До тем" Click="BackToMenu_Click" Width="120" Height="40" Style="{StaticResource ModernButtonStyle}"/>
                 <TextBlock x:Name="ScoreText" Text="Рахунок: 0/0" DockPanel.Dock="Right" 
                            FontSize="22" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
             </DockPanel>
@@ -77,7 +80,8 @@
             <StackPanel Grid.Row="2" Margin="0,30,0,0">
                 <TextBlock Text="Який це жест?" HorizontalAlignment="Center" FontSize="24" 
                            Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20"/>
-                <UniformGrid Columns="3" Height="80">
+
+                <UniformGrid x:Name="AnswersGrid" Columns="3" Height="80">
                     <Button x:Name="Answer1" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
                     <Button x:Name="Answer2" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
                     <Button x:Name="Answer3" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>

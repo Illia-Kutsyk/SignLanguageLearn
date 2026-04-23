@@ -20,7 +20,6 @@ namespace SignLanguageLearn.Views
         private void BtnAchievements_Click(object sender, RoutedEventArgs e) =>
             NavigationService.Navigate(new AchievementsPage());
 
-        // ВИПРАВЛЕНО: Прибрали 's', тепер назва збігається з класом у TestPage.xaml.cs
         private void BtnTests_Click(object sender, RoutedEventArgs e) =>
             NavigationService.Navigate(new TestPage());
     }

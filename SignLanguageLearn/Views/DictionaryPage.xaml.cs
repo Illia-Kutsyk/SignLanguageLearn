@@ -16,7 +16,6 @@ namespace SignLanguageLearn.Views
         {
             try
             {
-                // Відкриваємо сайт у стандартному браузері
                 Process.Start(new ProcessStartInfo("https://www.spreadthesign.com") { UseShellExecute = true });
             }
             catch (Exception ex)

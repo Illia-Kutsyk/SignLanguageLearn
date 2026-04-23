@@ -9,12 +9,29 @@
             <SolidColorBrush x:Key="TextBrush" Color="#2D3436"/>
             <SolidColorBrush x:Key="FieldBackBrush" Color="White"/>
             <SolidColorBrush x:Key="AccentBrush" Color="#455A64"/>
-
             <SolidColorBrush x:Key="CardBrush" Color="White"/>
 
             <SolidColorBrush x:Key="PrimaryBackground" Color="{Binding Source={StaticResource BackgroundBrush}, Path=Color}"/>
             <SolidColorBrush x:Key="CardBackground" Color="{Binding Source={StaticResource FieldBackBrush}, Path=Color}"/>
             <SolidColorBrush x:Key="MainText" Color="{Binding Source={StaticResource TextBrush}, Path=Color}"/>
+
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="{DynamicResource FieldBackBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="CaretBrush" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="10,0"/>
+            </Style>
+
+            <Style TargetType="PasswordBox">
+                <Setter Property="Background" Value="{DynamicResource FieldBackBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="CaretBrush" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="10,0"/>
+            </Style>
 
             <Style x:Key="MenuButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>

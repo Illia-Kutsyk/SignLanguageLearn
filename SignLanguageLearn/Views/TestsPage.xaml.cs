@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace SignLanguageLearn.Views
 {
@@ -12,7 +14,7 @@ namespace SignLanguageLearn.Views
         private string _correctAnswer;
         private int _totalQuestions = 0;
         private int _correctCount = 0;
-        private readonly Random _random = new Random(); // Поле тільки для читання
+        private readonly Random _random = new Random();
         private string[] _testItems;
 
         public TestPage()
@@ -34,7 +36,6 @@ namespace SignLanguageLearn.Views
 
         private void SetupTestData(string theme)
         {
-            // Беремо мову напряму, без зайвих змінних
             string lang = "UA";
             if (MainWindow.AppData != null && MainWindow.AppData.AppSettings != null)
             {
@@ -43,13 +44,15 @@ namespace SignLanguageLearn.Views
 
             if (theme == "Alphabet")
             {
-                _testItems = lang == "EN"
+                _testItems = (lang == "EN")
                     ? new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" }
                     : new[] { "А", "Б", "В", "Г", "Ґ", "Д", "Е", "Є", "Ж", "З" };
             }
             else
             {
-                _testItems = lang == "EN" ? new[] { "Hello", "Thanks" } : new[] { "Привіт", "Дякую" };
+                _testItems = (lang == "EN")
+                    ? new[] { "Hello", "Thanks" }
+                    : new[] { "Привіт", "Дякую" };
             }
         }
 
@@ -70,11 +73,18 @@ namespace SignLanguageLearn.Views
 
             Answer1.Content = shuffled[0];
 
-            // Налаштування видимості кнопок
-            if (shuffled.Count > 1) { Answer2.Content = shuffled[1]; Answer2.Visibility = Visibility.Visible; }
+            if (shuffled.Count > 1)
+            {
+                Answer2.Content = shuffled[1];
+                Answer2.Visibility = Visibility.Visible;
+            }
             else Answer2.Visibility = Visibility.Collapsed;
 
-            if (shuffled.Count > 2) { Answer3.Content = shuffled[2]; Answer3.Visibility = Visibility.Visible; }
+            if (shuffled.Count > 2)
+            {
+                Answer3.Content = shuffled[2];
+                Answer3.Visibility = Visibility.Visible;
+            }
             else Answer3.Visibility = Visibility.Collapsed;
 
             PlayTestVideo(_correctAnswer);
@@ -89,35 +99,64 @@ namespace SignLanguageLearn.Views
                     lang = MainWindow.AppData.AppSettings.CurrentLanguage.ToLower();
 
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Videos", lang + "_" + GetFileName(letter) + ".mp4");
+
                 if (File.Exists(path))
                 {
                     TestVideo.Source = new Uri(path);
                     TestVideo.Play();
                 }
             }
-            catch { }
+            catch { /* Ігноруємо помилки завантаження відео */ }
         }
 
-        private void Answer_Click(object sender, RoutedEventArgs e)
+        private async void Answer_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            if (btn == null || btn.Content == null) return;
+            if (btn == null) return;
+
+            SetButtonsEnabled(false);
 
             _totalQuestions++;
-            if (btn.Content.ToString() == _correctAnswer)
+            bool isCorrect = btn.Content != null && btn.Content.ToString() == _correctAnswer;
+
+            if (isCorrect)
             {
                 _correctCount++;
-                MessageBox.Show("Правильно! ✨");
+                btn.Background = Brushes.LightGreen;
             }
-            else MessageBox.Show("Неправильно. Це був жест: " + _correctAnswer);
+            else
+            {
+                btn.Background = Brushes.Crimson;
+                btn.Foreground = Brushes.White;
+            }
 
-            ScoreText.Text = "Рахунок: " + _correctCount + "/" + _totalQuestions;
+            ScoreText.Text = string.Format("Рахунок: {0}/{1}", _correctCount, _totalQuestions);
+
+            await Task.Delay(800);
+
+            btn.ClearValue(Button.BackgroundProperty);
+            btn.ClearValue(Button.ForegroundProperty);
+
+            SetButtonsEnabled(true);
             GenerateQuestion();
+        }
+
+        private void SetButtonsEnabled(bool isEnabled)
+        {
+            if (AnswersGrid == null) return;
+
+            foreach (UIElement child in AnswersGrid.Children)
+            {
+                Button b = child as Button;
+                if (b != null) b.IsEnabled = isEnabled;
+            }
         }
 
         private string GetFileName(string text)
         {
+            if (string.IsNullOrEmpty(text)) return "";
             string input = text.ToLower();
+
             switch (input)
             {
                 case "а": case "a": return "a";

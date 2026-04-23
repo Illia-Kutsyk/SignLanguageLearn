@@ -21,13 +21,11 @@ namespace SignLanguageLearn.Views
             if (MainWindow.AppData == null) return;
             _isReady = false;
 
-            // 1. Встановлюємо перемикачі мови жестів
             if (MainWindow.AppData.AppSettings.CurrentLanguage == "UA")
                 RbUa.IsChecked = true;
             else
                 RbEn.IsChecked = true;
 
-            // 2. Встановлюємо перемикачі теми (замість ThemeCheckBox)
             if (MainWindow.AppData.AppSettings.CurrentTheme == "Dark")
                 RbDark.IsChecked = true;
             else
@@ -40,24 +38,20 @@ namespace SignLanguageLearn.Views
         {
             if (!_isReady || MainWindow.AppData == null) return;
 
-            // Зберігаємо зміни в наш data.json
             DataManager.SaveData(MainWindow.AppData);
 
-            // Оновлюємо кольори теми
             try
             {
                 App.ColorUpdate(MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
             }
             catch { /* Обробка, якщо метод ще не реалізований */ }
 
-            // Перезавантажуємо сторінку
             if (Application.Current.MainWindow is MainWindow mainWin)
             {
                 mainWin.MainFrame.Navigate(new SettingsPage());
             }
         }
 
-        // --- ОБРОБНИКИ МОВИ ---
         private void RbUa_Checked(object sender, RoutedEventArgs e)
         {
             if (MainWindow.AppData != null)
@@ -76,7 +70,6 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // --- ОБРОБНИКИ ТЕМИ (Додано замість старих DarkTheme_Checked) ---
         private void RbLight_Checked(object sender, RoutedEventArgs e)
         {
             if (MainWindow.AppData != null)

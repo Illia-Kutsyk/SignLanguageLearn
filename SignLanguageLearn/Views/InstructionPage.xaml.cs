@@ -13,7 +13,6 @@ namespace SignLanguageLearn.Views
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            // Повертаємося на попередню сторінку (зазвичай HomePage)
             if (NavigationService.CanGoBack)
             {
                 NavigationService.GoBack();

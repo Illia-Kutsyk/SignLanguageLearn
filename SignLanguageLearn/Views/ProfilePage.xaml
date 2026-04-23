@@ -21,20 +21,11 @@
                 <TextBlock Text="Логін" Foreground="{DynamicResource TextBrush}" Margin="0,5" FontSize="14"/>
                 <TextBox x:Name="LoginTxt" 
                          Height="40" 
-                         VerticalContentAlignment="Center" 
-                         Padding="10,0"
-                         Background="{DynamicResource FieldBackBrush}" 
-                         Foreground="{DynamicResource TextBrush}"
-                         BorderBrush="{DynamicResource AccentBrush}"/>
+                         TextChanged="LoginTxt_TextChanged"/>
 
                 <TextBlock Text="Пароль" Foreground="{DynamicResource TextBrush}" Margin="0,15,0,5" FontSize="14"/>
                 <PasswordBox x:Name="PassBox" 
-                             Height="40" 
-                             VerticalContentAlignment="Center" 
-                             Padding="10,0"
-                             Background="{DynamicResource FieldBackBrush}" 
-                             Foreground="{DynamicResource TextBrush}"
-                             BorderBrush="{DynamicResource AccentBrush}"/>
+                             Height="40" />
 
                 <Button Content="Увійти" 
                         Height="45" 
@@ -98,7 +89,33 @@
                     </Button.Resources>
                 </Button>
             </StackPanel>
-
         </StackPanel>
+
+        <Border x:Name="NotificationBox" 
+                Visibility="Collapsed"
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                Margin="0,20,0,0" 
+                Padding="20,10" 
+                CornerRadius="10" 
+                Background="#2D2D30" 
+                BorderThickness="2"
+                Panel.ZIndex="1000">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="NotificationText" 
+                           Foreground="White" 
+                           FontSize="14" 
+                           VerticalAlignment="Center"
+                           FontWeight="Medium"/>
+                <Button Content="✕" 
+                        Click="CloseNotification" 
+                        Background="Transparent" 
+                        Foreground="Gray" 
+                        BorderThickness="0" 
+                        Margin="15,0,0,0" 
+                        Cursor="Hand"
+                        FontSize="14"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

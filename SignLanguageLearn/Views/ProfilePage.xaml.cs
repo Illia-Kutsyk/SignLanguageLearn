@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Windows.Media;
 using SignLanguageLearn.Services;
 using SignLanguageLearn.Models;
 
@@ -8,23 +10,51 @@ namespace SignLanguageLearn.Views
 {
     public partial class ProfilePage : Page
     {
+        private DispatcherTimer _timer;
+
         public ProfilePage()
         {
             InitializeComponent();
 
-            // Важливо: переконайся, що DatabaseService має метод Initialize()
+            // Таймер для автоматичного приховування сповіщень через 4 секунди
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4) };
+            _timer.Tick += (s, e) => { NotificationBox.Visibility = Visibility.Collapsed; _timer.Stop(); };
+
+            // Ініціалізація бази даних
             try { DatabaseService.Initialize(); } catch { }
 
+            // Перевірка, чи користувач уже залогінений
             var data = DataManager.LoadData();
-
             if (data?.UserData != null && data.UserData.IsLoggedIn)
             {
                 ShowProfile(data.UserData.UserName);
             }
         }
 
-        // Події натискання кнопок мають бути public або private, 
-        // але назви мають ТОЧНО збігатися з XAML
+        // Метод для показу красивих сповіщень (червоне - помилка, колір акценту - успіх)
+        private void ShowAlert(string message, bool isError = true)
+        {
+            NotificationText.Text = message;
+            NotificationBox.BorderBrush = isError ?
+                new SolidColorBrush(Color.FromRgb(231, 76, 60)) :
+                (Brush)FindResource("AccentBrush");
+
+            NotificationBox.Visibility = Visibility.Visible;
+            _timer.Stop();
+            _timer.Start();
+        }
+
+        private void CloseNotification(object sender, RoutedEventArgs e)
+        {
+            NotificationBox.Visibility = Visibility.Collapsed;
+        }
+
+        // Обробка введення тексту (якщо потрібно додати валідацію на ходу)
+        private void LoginTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Зараз порожньо, щоб не заважати вводу
+        }
+
         public void LoginClick(object sender, RoutedEventArgs e)
         {
             string login = LoginTxt.Text;
@@ -32,7 +62,7 @@ namespace SignLanguageLearn.Views
 
             if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Будь ласка, введіть логін та пароль!");
+                ShowAlert("Будь ласка, введіть логін та пароль!");
                 return;
             }
 
@@ -46,7 +76,7 @@ namespace SignLanguageLearn.Views
             }
             else
             {
-                MessageBox.Show("Невірний логін або пароль.");
+                ShowAlert("Невірний логін або пароль.");
             }
         }
 
@@ -57,17 +87,17 @@ namespace SignLanguageLearn.Views
 
             if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Заповніть поля для реєстрації!");
+                ShowAlert("Заповніть поля для реєстрації!");
                 return;
             }
 
             if (DatabaseService.Register(login, password))
             {
-                MessageBox.Show("Реєстрація успішна! Тепер увійдіть.");
+                ShowAlert("Реєстрація успішна! Тепер увійдіть.", false);
             }
             else
             {
-                MessageBox.Show("Користувач з таким логіном вже існує.");
+                ShowAlert("Користувач з таким логіном вже існує.");
             }
         }
 

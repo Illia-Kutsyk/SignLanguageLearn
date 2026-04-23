@@ -14,7 +14,6 @@ namespace SignLanguageLearn.Views
             InitializeComponent();
         }
 
-        // 1. Метод для відображення кнопок категорій
         private void Category_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -27,7 +26,6 @@ namespace SignLanguageLearn.Views
 
             ItemsList.Items.Clear();
 
-            // Отримуємо поточну мову з налаштувань програми
             string lang = "UA";
             if (MainWindow.AppData != null && MainWindow.AppData.AppSettings != null)
             {
@@ -39,12 +37,10 @@ namespace SignLanguageLearn.Views
                 string[] alphabet;
                 if (lang == "EN")
                 {
-                    // Англійський алфавіт (змінюється автоматично)
                     alphabet = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
                 }
                 else
                 {
-                    // Український алфавіт
                     alphabet = new string[] { "А", "Б", "В", "Г", "Ґ", "Д", "Е", "Є", "Ж", "З" };
                 }
 
@@ -68,7 +64,6 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // 2. Вибір елемента у списку (запуск відео)
         private void ItemsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBoxItem selected = ItemsList.SelectedItem as ListBoxItem;
@@ -80,7 +75,6 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // 3. Логіка плеєра
         private void PlayVideo(string code)
         {
             try
@@ -91,7 +85,6 @@ namespace SignLanguageLearn.Views
                     lang = MainWindow.AppData.AppSettings.CurrentLanguage.ToLower();
                 }
 
-                // Формуємо назву: ua_a.mp4 або en_a.mp4
                 string fileName = lang + "_" + code + ".mp4";
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Videos", fileName);
 
@@ -99,7 +92,7 @@ namespace SignLanguageLearn.Views
                 {
                     LessonVideo.Source = new Uri(path);
                     LessonVideo.SpeedRatio = SpeedSlider.Value;
-                    LessonVideo.Play(); // Автозапуск при натисканні на літеру
+                    LessonVideo.Play();
                 }
                 else
                 {
@@ -112,13 +105,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // 4. Співставлення тексту кнопки з іменем файлу
         private string GetFileName(string text)
         {
             string input = text.ToLower();
             switch (input)
             {
-                // Українські символи
                 case "а": return "a";
                 case "б": return "b";
                 case "в": return "v";
@@ -130,7 +121,6 @@ namespace SignLanguageLearn.Views
                 case "ж": return "j";
                 case "з": return "z";
 
-                // Англійські символи (щоб не плутати з кирилицею)
                 case "a": return "a";
                 case "b": return "b";
                 case "c": return "c";
@@ -142,7 +132,6 @@ namespace SignLanguageLearn.Views
                 case "i": return "i";
                 case "j": return "j";
 
-                // Фрази
                 case "привіт":
                 case "hello": return "hello";
                 case "дякую":
@@ -152,7 +141,6 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // Кнопки керування та події
         private void Play_Click(object sender, RoutedEventArgs e) => LessonVideo.Play();
         private void Pause_Click(object sender, RoutedEventArgs e) => LessonVideo.Pause();
         private void Restart_Click(object sender, RoutedEventArgs e)
