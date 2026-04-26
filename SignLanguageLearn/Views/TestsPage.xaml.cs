@@ -9,6 +9,10 @@ using System.Windows.Media;
 
 namespace SignLanguageLearn.Views
 {
+    /// <summary>
+    /// Логіка взаємодії для сторінки тестування знань (TestPage.xaml).
+    /// Забезпечує вибір теми, генерацію питань, відтворення відео та підрахунок результатів.
+    /// </summary>
     public partial class TestPage : Page
     {
         private string _correctAnswer;
@@ -17,11 +21,20 @@ namespace SignLanguageLearn.Views
         private readonly Random _random = new Random();
         private string[] _testItems;
 
+        /// <summary>
+        /// Ініціалізує новий екземпляр класу <see cref="TestPage"/>.
+        /// </summary>
         public TestPage()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Обробник події натискання на кнопку вибору теми тесту.
+        /// Приховує меню, ініціалізує дані для обраної теми та запускає перше питання.
+        /// </summary>
+        /// <param name="sender">Джерело події (кнопка теми).</param>
+        /// <param name="e">Аргументи події.</param>
         private void SelectTheme_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -34,6 +47,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Налаштовує масив доступних тестових елементів (букв або слів) 
+        /// залежно від обраної теми та поточної мови застосунку (UA/EN).
+        /// </summary>
+        /// <param name="theme">Тема тесту (наприклад, "Alphabet").</param>
         private void SetupTestData(string theme)
         {
             string lang = "UA";
@@ -56,6 +74,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Генерує нове тестове питання.
+        /// Випадковим чином обирає правильну відповідь, формує список хибних варіантів,
+        /// перемішує їх та оновлює інтерфейс користувача.
+        /// </summary>
         private void GenerateQuestion()
         {
             if (_testItems == null || _testItems.Length == 0) return;
@@ -90,6 +113,10 @@ namespace SignLanguageLearn.Views
             PlayTestVideo(_correctAnswer);
         }
 
+        /// <summary>
+        /// Формує шлях до відеофайлу на основі переданого жесту та відтворює його у плеєрі.
+        /// </summary>
+        /// <param name="letter">Слово або буква для відтворення.</param>
         private void PlayTestVideo(string letter)
         {
             try
@@ -109,6 +136,13 @@ namespace SignLanguageLearn.Views
             catch { /* Ігноруємо помилки завантаження відео */ }
         }
 
+        /// <summary>
+        /// Асинхронний обробник натискання на кнопку відповіді.
+        /// Перевіряє правильність вибору, оновлює статистику, підсвічує кнопку 
+        /// відповідним кольором та генерує наступне питання після затримки.
+        /// </summary>
+        /// <param name="sender">Кнопка з обраною відповіддю.</param>
+        /// <param name="e">Аргументи події.</param>
         private async void Answer_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -141,6 +175,11 @@ namespace SignLanguageLearn.Views
             GenerateQuestion();
         }
 
+        /// <summary>
+        /// Блокує або розблоковує всі кнопки варіантів відповідей, 
+        /// щоб уникнути подвійних натискань під час анімації затримки.
+        /// </summary>
+        /// <param name="isEnabled">Стан доступності кнопок (true - доступні, false - заблоковані).</param>
         private void SetButtonsEnabled(bool isEnabled)
         {
             if (AnswersGrid == null) return;
@@ -152,6 +191,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Трансформує текст (букву чи слово) у відповідну назву відеофайлу.
+        /// </summary>
+        /// <param name="text">Текст жесту.</param>
+        /// <returns>Форматована назва файлу без розширення.</returns>
         private string GetFileName(string text)
         {
             if (string.IsNullOrEmpty(text)) return "";
@@ -176,6 +220,12 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Обробник події для кнопки "Назад".
+        /// Зупиняє відео, скидає прогрес тестування та повертає користувача до меню вибору теми.
+        /// </summary>
+        /// <param name="sender">Джерело події.</param>
+        /// <param name="e">Аргументи події.</param>
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             TestVideo.Stop();
@@ -186,6 +236,12 @@ namespace SignLanguageLearn.Views
             ScoreText.Text = "Рахунок: 0/0";
         }
 
+        /// <summary>
+        /// Обробник події завершення відтворення відео.
+        /// Забезпечує постійне зациклення відеофрагменту доти, доки користувач не дасть відповідь.
+        /// </summary>
+        /// <param name="sender">Медіаелемент, що завершив відтворення.</param>
+        /// <param name="e">Аргументи події.</param>
         private void TestVideo_MediaEnded(object sender, RoutedEventArgs e)
         {
             TestVideo.Position = TimeSpan.Zero;

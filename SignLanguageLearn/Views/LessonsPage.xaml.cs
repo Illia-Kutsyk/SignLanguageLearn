@@ -7,13 +7,27 @@ using SignLanguageLearn.Services;
 
 namespace SignLanguageLearn.Views
 {
+    /// <summary>
+    /// Логіка взаємодії для сторінки уроків (LessonsPage.xaml).
+    /// Забезпечує вибір категорій навчання, відображення списку жестів 
+    /// та керування відтворенням відеоуроків.
+    /// </summary>
     public partial class LessonsPage : Page
     {
+        /// <summary>
+        /// Ініціалізує новий екземпляр класу <see cref="LessonsPage"/>.
+        /// </summary>
         public LessonsPage()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Обробник натискання на кнопку категорії (Алфавіт або Фрази).
+        /// Перемикає інтерфейс на список уроків та заповнює його даними відповідно до обраної мови.
+        /// </summary>
+        /// <param name="sender">Кнопка категорії з відповідним Tag.</param>
+        /// <param name="e">Аргументи події.</param>
         private void Category_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -64,6 +78,10 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Обробник зміни вибору у списку жестів.
+        /// Отримує назву обраного елемента та запускає відповідне відео.
+        /// </summary>
         private void ItemsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBoxItem selected = ItemsList.SelectedItem as ListBoxItem;
@@ -75,6 +93,10 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Формує шлях до медіафайлу та запускає відтворення відео з урахуванням поточної швидкості.
+        /// </summary>
+        /// <param name="code">Кодова назва жесту для пошуку файлу.</param>
         private void PlayVideo(string code)
         {
             try
@@ -105,6 +127,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Перетворює відображуваний текст жесту у технічне ім'я файлу (латиницею).
+        /// </summary>
+        /// <param name="text">Текст жесту (буква або слово).</param>
+        /// <returns>Рядок, що використовується як частина імені файлу.</returns>
         private string GetFileName(string text)
         {
             string input = text.ToLower();
@@ -141,14 +168,28 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Відновлює відтворення відео.
+        /// </summary>
         private void Play_Click(object sender, RoutedEventArgs e) => LessonVideo.Play();
+
+        /// <summary>
+        /// Призупиняє відтворення відео.
+        /// </summary>
         private void Pause_Click(object sender, RoutedEventArgs e) => LessonVideo.Pause();
+
+        /// <summary>
+        /// Скидає відео на початок та запускає відтворення.
+        /// </summary>
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
             LessonVideo.Position = TimeSpan.Zero;
             LessonVideo.Play();
         }
 
+        /// <summary>
+        /// Повертає користувача до меню вибору категорій, зупиняючи плеєр.
+        /// </summary>
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             LessonVideo.Stop();
@@ -156,11 +197,17 @@ namespace SignLanguageLearn.Views
             CategoryMenu.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Оновлює швидкість відтворення відео при зміні положення повзунка.
+        /// </summary>
         private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (LessonVideo != null) LessonVideo.SpeedRatio = e.NewValue;
         }
 
+        /// <summary>
+        /// Скидає позицію відео після завершення відтворення.
+        /// </summary>
         private void LessonVideo_MediaEnded(object sender, RoutedEventArgs e)
         {
             LessonVideo.Position = TimeSpan.Zero;

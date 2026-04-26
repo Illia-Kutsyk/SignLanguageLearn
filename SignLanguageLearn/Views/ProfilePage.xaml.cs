@@ -8,10 +8,22 @@ using SignLanguageLearn.Models;
 
 namespace SignLanguageLearn.Views
 {
+    /// <summary>
+    /// Логіка взаємодії для сторінки профілю (ProfilePage.xaml).
+    /// Забезпечує функціонал авторизації, реєстрації користувачів, 
+    /// а також відображення інформації про поточний профіль.
+    /// </summary>
     public partial class ProfilePage : Page
     {
+        /// <summary>
+        /// Таймер для автоматичного приховування спливаючих сповіщень.
+        /// </summary>
         private DispatcherTimer _timer;
 
+        /// <summary>
+        /// Ініціалізує новий екземпляр класу <see cref="ProfilePage"/>.
+        /// Налаштовує систему сповіщень та перевіряє стан поточної сесії користувача.
+        /// </summary>
         public ProfilePage()
         {
             InitializeComponent();
@@ -20,10 +32,10 @@ namespace SignLanguageLearn.Views
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4) };
             _timer.Tick += (s, e) => { NotificationBox.Visibility = Visibility.Collapsed; _timer.Stop(); };
 
-            // Ініціалізація бази даних
+            // Ініціалізація бази даних (створення файлу JSON, якщо його немає)
             try { DatabaseService.Initialize(); } catch { }
 
-            // Перевірка, чи користувач уже залогінений
+            // Перевірка, чи користувач уже залогінений при відкритті сторінки
             var data = DataManager.LoadData();
             if (data?.UserData != null && data.UserData.IsLoggedIn)
             {
@@ -31,7 +43,11 @@ namespace SignLanguageLearn.Views
             }
         }
 
-        // Метод для показу красивих сповіщень (червоне - помилка, колір акценту - успіх)
+        /// <summary>
+        /// Відображає кастомне сповіщення у верхній частині сторінки.
+        /// </summary>
+        /// <param name="message">Текст повідомлення для користувача.</param>
+        /// <param name="isError">Визначає колір рамки: true — червоний (помилка), false — колір акценту (успіх).</param>
         private void ShowAlert(string message, bool isError = true)
         {
             NotificationText.Text = message;
@@ -44,17 +60,26 @@ namespace SignLanguageLearn.Views
             _timer.Start();
         }
 
+        /// <summary>
+        /// Обробник події для закриття сповіщення вручну через кнопку-хрестик.
+        /// </summary>
         private void CloseNotification(object sender, RoutedEventArgs e)
         {
             NotificationBox.Visibility = Visibility.Collapsed;
         }
 
-        // Обробка введення тексту (якщо потрібно додати валідацію на ходу)
+        /// <summary>
+        /// Обробник зміни тексту у полі логіну. Використовується для валідації вводу в реальному часі.
+        /// </summary>
         private void LoginTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Зараз порожньо, щоб не заважати вводу
+            // На даний момент логіка валідації на ходу не потрібна
         }
 
+        /// <summary>
+        /// Обробник натискання кнопки "Увійти". 
+        /// Виконує перевірку облікових даних через <see cref="DatabaseService"/>.
+        /// </summary>
         public void LoginClick(object sender, RoutedEventArgs e)
         {
             string login = LoginTxt.Text;
@@ -80,6 +105,10 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Обробник натискання кнопки "Реєстрація".
+        /// Додає нового користувача до бази даних, якщо логін вільний.
+        /// </summary>
         public void RegisterClick(object sender, RoutedEventArgs e)
         {
             string login = LoginTxt.Text;
@@ -101,6 +130,10 @@ namespace SignLanguageLearn.Views
             }
         }
 
+        /// <summary>
+        /// Обробник натискання кнопки "Вийти".
+        /// Скидає статус авторизації в налаштуваннях та повертає інтерфейс до форми входу.
+        /// </summary>
         public void LogoutClick(object sender, RoutedEventArgs e)
         {
             var data = DataManager.LoadData();
@@ -114,6 +147,10 @@ namespace SignLanguageLearn.Views
             AuthBlock.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Перемикає візуальний стан сторінки на режим відображення профілю залогіненого користувача.
+        /// </summary>
+        /// <param name="login">Логін користувача для виведення на екран.</param>
         private void ShowProfile(string login)
         {
             UserNameLbl.Text = login;
