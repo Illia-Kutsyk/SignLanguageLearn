@@ -11,8 +11,6 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -24,11 +22,8 @@
                                 <Setter TargetName="border" Property="Background" Value="#455A64"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#37474F"/>
-                            </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -38,26 +33,80 @@
     </Page.Resources>
 
     <Grid Margin="40">
-        <StackPanel x:Name="TestMenu" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible">
-            <TextBlock Text="Оберіть тему тестування" FontSize="32" FontWeight="Bold" 
-                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,40" HorizontalAlignment="Center"/>
+        <ScrollViewer x:Name="TestMenu" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel VerticalAlignment="Top">
+                <TextBlock Text="Оберіть тему тестування" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
-            <UniformGrid Columns="2" Width="650">
-                <Button Click="SelectTheme_Click" Tag="Alphabet" Margin="15" Height="200" Style="{StaticResource ModernButtonStyle}">
-                    <StackPanel>
-                        <TextBlock Text="🔤" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                        <TextBlock Text="Алфавіт" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Click="SelectTheme_Click" Tag="Phrases" Margin="15" Height="200" Style="{StaticResource ModernButtonStyle}">
-                    <StackPanel>
-                        <TextBlock Text="👋" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                        <TextBlock Text="Базові фрази" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </UniformGrid>
-        </StackPanel>
+                <UniformGrid Columns="2" Width="750">
+                    <Button Click="SelectTheme_Click" Tag="Alphabet" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🔤" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Алфавіт" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnNumbersTest" Click="SelectTheme_Click" Tag="Numbers" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🔢" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtNumbersTest" Text="Числа та Математика" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnPropertiesTest" Click="SelectTheme_Click" Tag="Properties" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🎨" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtPropertiesTest" Text="Кольори та Властивості" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnPhrasesTest" Click="SelectTheme_Click" Tag="Phrases" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="💬" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtPhrasesTest" Text="Базові фрази" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnTimeTest" Click="SelectTheme_Click" Tag="Time" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="⏳" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtTimeTest" Text="Час та Календар" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnSocietyTest" Click="SelectTheme_Click" Tag="Society" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🌍" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtSocietyTest" Text="Люди та Суспільство" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnEnvironmentTest" Click="SelectTheme_Click" Tag="Environment" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🏞️" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtEnvironmentTest" Text="Навколишній світ" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnActionsTest" Click="SelectTheme_Click" Tag="Actions" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🏃" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtActionsTest" Text="Дії та Рух" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnStatesTest" Click="SelectTheme_Click" Tag="States" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🧠" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtStatesTest" Text="Стани та Почуття" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnObjectsTest" Click="SelectTheme_Click" Tag="Objects" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="📦" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtObjectsTest" Text="Предмети та Побут" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnNmtTest" Click="SelectTheme_Click" Tag="NMT" Margin="15" Height="150" Style="{StaticResource ModernButtonStyle}">
+                        <StackPanel>
+                            <TextBlock Text="🎓" FontSize="50" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="TxtNmtTest" Text="Комплексний тест (НМТ)" FontSize="20" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </UniformGrid>
+            </StackPanel>
+        </ScrollViewer>
 
         <Grid x:Name="TestInterface" Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -66,27 +115,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,20">
-                <Button Content="← До тем" Click="BackToMenu_Click" Width="120" Height="40" Style="{StaticResource ModernButtonStyle}"/>
-                <TextBlock x:Name="ScoreText" Text="Рахунок: 0/0" DockPanel.Dock="Right" 
-                           FontSize="22" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+            <DockPanel Margin="0,0,0,20">
+                <Button Content="←" Click="BtnMainMenu_Click" Width="60" Height="40" Style="{StaticResource ModernButtonStyle}"/>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="TimerText" Text="⏱ 00:00" FontSize="22" FontWeight="Bold" Foreground="#FF7675" Margin="0,0,20,0" Visibility="Collapsed"/>
+                    <TextBlock x:Name="ScoreText" Text="0/10" FontSize="22" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
             </DockPanel>
 
-            <Border Grid.Row="1" Background="Black" CornerRadius="20" ClipToBounds="True" MaxWidth="700">
-                <MediaElement x:Name="TestVideo" LoadedBehavior="Manual" UnloadedBehavior="Stop" 
-                              Stretch="Uniform" MediaEnded="TestVideo_MediaEnded"/>
+            <Border Grid.Row="1" Background="Black" CornerRadius="20" ClipToBounds="True">
+                <MediaElement x:Name="TestVideo" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaEnded="TestVideo_MediaEnded" Stretch="Uniform"/>
             </Border>
 
-            <StackPanel Grid.Row="2" Margin="0,30,0,0">
-                <TextBlock Text="Який це жест?" HorizontalAlignment="Center" FontSize="24" 
-                           Foreground="{DynamicResource TextBrush}" Margin="0,0,0,20"/>
-
-                <UniformGrid x:Name="AnswersGrid" Columns="3" Height="80">
-                    <Button x:Name="Answer1" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
-                    <Button x:Name="Answer2" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
-                    <Button x:Name="Answer3" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
-                </UniformGrid>
-            </StackPanel>
+            <UniformGrid x:Name="AnswersGrid" Grid.Row="2" Columns="3" Height="80" Margin="0,30,0,0">
+                <Button x:Name="Answer1" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
+                <Button x:Name="Answer2" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
+                <Button x:Name="Answer3" Click="Answer_Click" Margin="10,0" Style="{StaticResource ModernButtonStyle}"/>
+            </UniformGrid>
         </Grid>
     </Grid>
 </Page>

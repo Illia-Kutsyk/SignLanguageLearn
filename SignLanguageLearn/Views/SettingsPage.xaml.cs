@@ -6,21 +6,17 @@ using SignLanguageLearn.Services;
 namespace SignLanguageLearn.Views
 {
     /// <summary>
-    /// Логіка взаємодії для сторінки налаштувань (SettingsPage.xaml).
-    /// Забезпечує зміну мови локалізації та візуальної теми (світла/темна),
-    /// а також їх збереження у профіль користувача.
+    /// Сторінка налаштувань додатка, що дозволяє користувачеві змінювати мову інтерфейсу, тему оформлення та рівень складності.
     /// </summary>
     public partial class SettingsPage : Page
     {
         /// <summary>
-        /// Прапорець, що запобігає хибному спрацьовуванню подій Checked 
-        /// під час програмної ініціалізації перемикачів при завантаженні сторінки.
+        /// Прапор, який вказує, чи завершено початкове завантаження елементів інтерфейсу, щоб запобігти передчасному спрацьовуванню подій.
         /// </summary>
         private bool _isReady = false;
 
         /// <summary>
-        /// Ініціалізує новий екземпляр класу <see cref="SettingsPage"/>.
-        /// Завантажує поточні налаштування та готує інтерфейс до роботи.
+        /// Ініціалізує новий екземпляр сторінки налаштувань та завантажує поточні параметри.
         /// </summary>
         public SettingsPage()
         {
@@ -30,108 +26,48 @@ namespace SignLanguageLearn.Views
         }
 
         /// <summary>
-        /// Зчитує поточні параметри мови та теми з глобальних даних застосунку 
-        /// і встановлює відповідні перемикачі (RadioButtons) в активний стан.
+        /// Завантажує збережені налаштування конфігурації та встановлює відповідний стан перемикачів на формі.
         /// </summary>
         private void LoadToggles()
         {
             if (MainWindow.AppData == null) return;
-
-            // Тимчасово блокуємо виклик TriggerUpdate під час налаштування
             _isReady = false;
 
-            if (MainWindow.AppData.AppSettings.CurrentLanguage == "UA")
-                RbUa.IsChecked = true;
-            else
-                RbEn.IsChecked = true;
+            if (MainWindow.AppData.AppSettings.CurrentLanguage == "UA") RbUa.IsChecked = true;
+            else RbEn.IsChecked = true;
 
-            if (MainWindow.AppData.AppSettings.CurrentTheme == "Dark")
-                RbDark.IsChecked = true;
-            else
-                RbLight.IsChecked = true;
+            if (MainWindow.AppData.AppSettings.CurrentTheme == "Dark") RbDark.IsChecked = true;
+            else RbLight.IsChecked = true;
 
-            // Знімаємо блокування після успішного налаштування
+            string diff = MainWindow.AppData.AppSettings.Difficulty;
+            if (diff == "Easy") RbEasy.IsChecked = true;
+            else if (diff == "Hardcore") RbHardcore.IsChecked = true;
+            else RbNormal.IsChecked = true;
+
             _isReady = true;
         }
 
         /// <summary>
-        /// Зберігає оновлені налаштування у файл конфігурації (JSON), 
-        /// ініціює глобальну зміну кольорової теми та перезавантажує поточну сторінку 
-        /// для миттєвого застосування нової мови інтерфейсу.
+        /// Обробляє зміну будь-якого параметра налаштувань, оновлює глобальну конфігурацію, зберігає її та перезапускає тему додотка.
         /// </summary>
-        private void TriggerUpdate()
+        private void Difficulty_Changed(object sender, RoutedEventArgs e)
         {
-            // Уникаємо збереження, якщо сторінка ще завантажується
             if (!_isReady || MainWindow.AppData == null) return;
+
+            MainWindow.AppData.AppSettings.CurrentLanguage = RbUa.IsChecked == true ? "UA" : "EN";
+            MainWindow.AppData.AppSettings.CurrentTheme = RbDark.IsChecked == true ? "Dark" : "Light";
+
+            if (RbEasy.IsChecked == true) MainWindow.AppData.AppSettings.Difficulty = "Easy";
+            else if (RbHardcore.IsChecked == true) MainWindow.AppData.AppSettings.Difficulty = "Hardcore";
+            else MainWindow.AppData.AppSettings.Difficulty = "Normal";
 
             DataManager.SaveData(MainWindow.AppData);
 
-            try
-            {
-                App.ColorUpdate(MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
-            }
-            catch { /* Обробка винятку, якщо метод ColorUpdate відсутній або виникла помилка */ }
+            App.ColorUpdate(MainWindow.AppData.AppSettings.CurrentTheme == "Dark");
 
-            // Перезавантажуємо сторінку налаштувань для оновлення локалізованих ресурсів
             if (Application.Current.MainWindow is MainWindow mainWin)
             {
                 mainWin.MainFrame.Navigate(new SettingsPage());
-            }
-        }
-
-        /// <summary>
-        /// Обробник події встановлення української мови інтерфейсу.
-        /// </summary>
-        /// <param name="sender">Джерело події.</param>
-        /// <param name="e">Аргументи події.</param>
-        private void RbUa_Checked(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.AppData != null)
-            {
-                MainWindow.AppData.AppSettings.CurrentLanguage = "UA";
-                TriggerUpdate();
-            }
-        }
-
-        /// <summary>
-        /// Обробник події встановлення англійської мови інтерфейсу.
-        /// </summary>
-        /// <param name="sender">Джерело події.</param>
-        /// <param name="e">Аргументи події.</param>
-        private void RbEn_Checked(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.AppData != null)
-            {
-                MainWindow.AppData.AppSettings.CurrentLanguage = "EN";
-                TriggerUpdate();
-            }
-        }
-
-        /// <summary>
-        /// Обробник події вибору світлої візуальної теми застосунку.
-        /// </summary>
-        /// <param name="sender">Джерело події.</param>
-        /// <param name="e">Аргументи події.</param>
-        private void RbLight_Checked(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.AppData != null)
-            {
-                MainWindow.AppData.AppSettings.CurrentTheme = "Light";
-                TriggerUpdate();
-            }
-        }
-
-        /// <summary>
-        /// Обробник події вибору темної візуальної теми застосунку.
-        /// </summary>
-        /// <param name="sender">Джерело події.</param>
-        /// <param name="e">Аргументи події.</param>
-        private void RbDark_Checked(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.AppData != null)
-            {
-                MainWindow.AppData.AppSettings.CurrentTheme = "Dark";
-                TriggerUpdate();
             }
         }
     }

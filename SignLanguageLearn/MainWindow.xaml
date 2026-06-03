@@ -4,11 +4,11 @@
         Title="Gesto" Height="650" Width="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
+            <ColumnDefinition x:Name="SidebarColumn" Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Background="#1E1B29">
+        <Border x:Name="SidebarMenu" Background="#1E1B29">
             <Grid>
                 <StackPanel Margin="10,20">
                     <TextBlock Text="Gesto." Foreground="White" FontSize="28" FontWeight="Bold" Margin="20,0,0,30"/>

@@ -11,27 +11,19 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" 
-                        Background="{TemplateBinding Background}" 
-                        CornerRadius="15" 
-                        BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center"/>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#455A64"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#37474F"/>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -41,49 +33,109 @@
     </Page.Resources>
 
     <Grid x:Name="ContentGrid" Margin="40">
-        <UniformGrid x:Name="CategoryMenu" Columns="2" VerticalAlignment="Center" Visibility="Visible">
-            <Button Click="Category_Click" Tag="Alphabet" Margin="15" Height="200" Style="{StaticResource ModernButtonStyle}">
-                <StackPanel>
-                    <TextBlock Text="🔤" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                    <TextBlock Text="Алфавіт" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <UniformGrid x:Name="CategoryMenu" Columns="2" VerticalAlignment="Top" Visibility="Visible">
 
-            <Button Click="Category_Click" Tag="Phrases" Margin="15" Height="200" Style="{StaticResource ModernButtonStyle}">
-                <StackPanel>
-                    <TextBlock Text="👋" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                    <TextBlock Text="Базові фрази" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-        </UniformGrid>
+                <Button Click="Category_Click" Tag="Alphabet" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔤" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock Text="Алфавіт" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnNumbers" Click="Category_Click" Tag="Numbers" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🔢" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtNumbers" Text="Числа та Математика" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnProperties" Click="Category_Click" Tag="Properties" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🎨" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtProperties" Text="Кольори та Властивості" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnPhrases" Click="Category_Click" Tag="Phrases" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="💬" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtPhrases" Text="Базові фрази" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnTime" Click="Category_Click" Tag="Time" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="⏳" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtTime" Text="Час та Календар" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnSociety" Click="Category_Click" Tag="Society" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🌍" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtSociety" Text="Люди та Суспільство" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnEnvironment" Click="Category_Click" Tag="Environment" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🏞️" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtEnvironment" Text="Навколишній світ" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnActions" Click="Category_Click" Tag="Actions" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🏃" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtActions" Text="Дії та Рух" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnStates" Click="Category_Click" Tag="States" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🧠" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtStates" Text="Стани та Почуття" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="BtnObjects" Click="Category_Click" Tag="Objects" Margin="15" Height="180" Style="{StaticResource ModernButtonStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📦" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock x:Name="TxtObjects" Text="Предмети та Побут" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+            </UniformGrid>
+        </ScrollViewer>
 
         <Grid x:Name="LessonContent" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="280"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <Button Content="← Назад" Click="BackToMenu_Click" Width="100" Height="40" 
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Content="← Назад" Click="BackToMenu_Click" Width="120" Height="40" 
                         Style="{StaticResource ModernButtonStyle}" HorizontalAlignment="Left" Margin="0,0,0,20"/>
 
-                <ListBox x:Name="ItemsList" Height="450" 
-                         DisplayMemberPath="Title"
-                         Background="{DynamicResource CardBrush}" 
-                         BorderThickness="0"
-                         Foreground="{DynamicResource TextBrush}"
-                         SelectionChanged="ItemsList_SelectionChanged"
-                         ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListBox Grid.Row="1" x:Name="ItemsList" 
+                         Background="{DynamicResource CardBrush}" BorderThickness="0"
+                         Foreground="{DynamicResource TextBrush}" SelectionChanged="ItemsList_SelectionChanged"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Padding" Value="15,10"/>
                             <Setter Property="FontSize" Value="18"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="BorderThickness" Value="0"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
-            </StackPanel>
+            </Grid>
 
             <Grid Grid.Column="1" Margin="30,0,0,0">
                 <Grid.RowDefinitions>
@@ -91,31 +143,23 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border Background="Black" CornerRadius="20" ClipToBounds="True" Margin="5">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="15" Direction="270" RenderingBias="Quality" ShadowDepth="2" Opacity="0.3"/>
-                    </Border.Effect>
+                <Border Background="Black" CornerRadius="20" ClipToBounds="True">
                     <MediaElement x:Name="LessonVideo" LoadedBehavior="Manual" UnloadedBehavior="Stop" 
                                   Stretch="Uniform" MediaEnded="LessonVideo_MediaEnded"/>
                 </Border>
 
                 <StackPanel Grid.Row="1" Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
-                        <TextBlock Text="🐌" FontSize="25" VerticalAlignment="Center" Margin="0,0,10,0" 
-                   Foreground="{DynamicResource TextBrush}"/>
-
+                        <TextBlock Text="🐌" FontSize="25" Foreground="{DynamicResource TextBrush}" Margin="0,0,10,0"/>
                         <Slider x:Name="SpeedSlider" Width="200" Minimum="0.2" Maximum="1.0" Value="1.0" 
-                TickFrequency="0.1" IsSnapToTickEnabled="True" ValueChanged="SpeedSlider_ValueChanged"
-                VerticalAlignment="Center"/>
-
-                        <TextBlock Text="🐇" FontSize="25" VerticalAlignment="Center" Margin="10,0,0,0" 
-                   Foreground="{DynamicResource TextBrush}"/>
+                                ValueChanged="SpeedSlider_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.1"/>
+                        <TextBlock Text="🐇" FontSize="25" Foreground="{DynamicResource TextBrush}" Margin="10,0,0,0"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="↺" Width="60" Height="50" Margin="10,0" Click="Restart_Click" Style="{StaticResource ModernButtonStyle}" FontSize="24"/>
-                        <Button Content="▶" Width="80" Height="50" Margin="10,0" Click="Play_Click" Style="{StaticResource ModernButtonStyle}" FontSize="24"/>
-                        <Button Content="⏸" Width="80" Height="50" Margin="10,0" Click="Pause_Click" Style="{StaticResource ModernButtonStyle}" FontSize="24"/>
+                        <Button Content="↺" Width="60" Height="50" Margin="10,0" Click="Restart_Click" Style="{StaticResource ModernButtonStyle}"/>
+                        <Button Content="▶" Width="80" Height="50" Margin="10,0" Click="Play_Click" Style="{StaticResource ModernButtonStyle}"/>
+                        <Button Content="⏸" Width="80" Height="50" Margin="10,0" Click="Pause_Click" Style="{StaticResource ModernButtonStyle}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

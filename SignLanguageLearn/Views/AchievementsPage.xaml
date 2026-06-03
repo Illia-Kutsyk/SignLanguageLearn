@@ -1,12 +1,9 @@
 ﻿<Page x:Class="SignLanguageLearn.Views.AchievementsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
       Title="AchievementsPage" 
       Background="{DynamicResource BackgroundBrush}">
+
     <Page.Triggers>
         <EventTrigger RoutedEvent="Page.Loaded">
             <BeginStoryboard>
@@ -25,41 +22,56 @@
     <Grid x:Name="ContentGrid" Margin="40">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="🏆" FontSize="80" HorizontalAlignment="Center"/>
-
             <TextBlock Text="Досягнення" FontSize="32" FontWeight="Bold" 
                        Foreground="{DynamicResource TextBrush}" 
                        HorizontalAlignment="Center" Margin="0,20"/>
 
-            <Border Background="{DynamicResource CardBrush}" CornerRadius="15" Padding="25" Width="500">
+            <Border Background="{DynamicResource CardBrush}" CornerRadius="15" Padding="25" Width="520">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.1"/>
                 </Border.Effect>
 
                 <StackPanel>
-                    <CheckBox Content="Перші кроки: Вивчити 5 жестів" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
+                    <CheckBox x:Name="Ach101" 
+                              Content="🥇 Перший крок: Пройти тест по Алфавіту" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
 
-                    <CheckBox Content="Словниковий запас: Вивчити 20 жестів" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
+                    <CheckBox x:Name="Ach102" 
+                              Content="🧠 Перфекціоніст: Пройти всі тести окрім НМТ" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
 
-                    <CheckBox Content="Експерт: Пройти всі тести на 100%" IsChecked="False" IsEnabled="False" 
-                              Foreground="{DynamicResource TextBrush}" Margin="0,10" FontSize="15"/>
+                    <CheckBox x:Name="Ach103" 
+                              Content="💀 Сталеві нерви: Будь-який тест на хардкорі" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
+
+                    <CheckBox x:Name="Ach104" 
+                              Content="🎓 Абітурієнт: Пройти комплексний тест (НМТ)" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
+
+                    <CheckBox x:Name="Ach105" 
+                              Content="🔥 Майстер Екстриму: Пройти НМТ на хардкорі" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
+
+                    <CheckBox x:Name="Ach106" 
+                              Content="⚡ Блискавичний Фініш: НМТ на хардкорі за &lt;10 хв" 
+                              IsChecked="False" IsEnabled="False" 
+                              Foreground="{DynamicResource TextBrush}" Margin="0,8" FontSize="15"/>
 
                     <Separator Margin="0,20" Background="{DynamicResource TextBrush}" Opacity="0.2"/>
 
-                    <TextBlock Text="Загальний прогрес" FontSize="16" FontWeight="SemiBold" 
+                    <TextBlock Text="Загальний прогрес ачівок" FontSize="16" FontWeight="SemiBold" 
                                Foreground="{DynamicResource TextBrush}" Margin="0,0,0,10"/>
 
                     <ProgressBar x:Name="OverallProgress" Value="0" Height="15" 
-                                 Foreground="#00B894" Background="#E0E0E0" Margin="0,0,0,5">
-                        <ProgressBar.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="7"/>
-                            </Style>
-                        </ProgressBar.Resources>
-                    </ProgressBar>
+                                 Foreground="#00B894" Background="#E0E0E0" Margin="0,0,0,5"/>
 
-                    <TextBlock Text="0%" FontSize="12" Foreground="Gray" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="ProgressText" 
+                               Text="0%" FontSize="12" Foreground="Gray" HorizontalAlignment="Right"/>
                 </StackPanel>
             </Border>
         </StackPanel>

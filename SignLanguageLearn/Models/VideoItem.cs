@@ -9,8 +9,8 @@ namespace SignLanguageLearn.Models
     public class VideoItem
     {
         public string Title { get; set; }
-        public string FileName { get; set; } // Додано
-        public string Category { get; set; } // Додано
+        public string FileName { get; set; }
+        public string Category { get; set; }
         public string Language { get; set; }
     }
 }
